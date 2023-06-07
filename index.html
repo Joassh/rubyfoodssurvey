@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Text File Writer</title>
+</head>
+<body>
+  <textarea id="textInput" placeholder="Enter your text here"></textarea>
+  <button onclick="saveToFile()">Save to File</button>
+
+  <script>
+    function saveToFile() {
+      const text = document.getElementById('textInput').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'save_text.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          alert('Text saved successfully!');
+        }
+      };
+      xhr.send('text=' + encodeURIComponent(text));
+    }
+  </script>
+</body>
+</html>
