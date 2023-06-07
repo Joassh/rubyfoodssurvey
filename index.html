@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruby Foods Pvt. Ltd. Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #333333;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      justify-content: center;
+    }
+    
+    .option {
+      margin: 10px;
+      padding: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .happy {
+      background-color: #66BB6A;
+    }
+    
+    .satisfactory {
+      background-color: #FFFFFF;
+    }
+    
+    .sad {
+      background-color: #EF5350;
+    }
+    
+    .smiley {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ruby Foods Pvt. Ltd. Survey</h1>
+
+    <?php
+    $shopOwners = [
+      'Shop Owner 1',
+      'Shop Owner 2',
+      'Shop Owner 3',
+      // Add more shop owners here
+    ];
+
+    foreach ($shopOwners as $shopOwner) {
+      echo '
+      <div class="option happy" onclick="saveSelection(\'' . $shopOwner . '\', \'happy\')">
+        <span class="smiley">&#128522;</span>
+        <p>Happy</p>
+      </div>
+    
+      <div class="option satisfactory" onclick="saveSelection(\'' . $shopOwner . '\', \'satisfactory\')">
+        <span class="smiley">&#128528;</span>
+        <p>Satisfactory</p>
+      </div>
+    
+      <div class="option sad" onclick="saveSelection(\'' . $shopOwner . '\', \'sad\')">
+        <span class="smiley">&#128546;</span>
+        <p>Sad</p>
+      </div>
+      ';
+    }
+    ?>
+  </div>
+
+  <script>
+    function saveSelection(shopOwner, selection) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'save_response.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          alert('Your response has been saved!');
+        }
+      };
+      xhr.send('shopOwner=' + encodeURIComponent(shopOwner) + '&selection=' + encodeURIComponent(selection));
+    }
+  </script>
+</body>
+</html>
